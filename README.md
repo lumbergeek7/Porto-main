@@ -1,31 +1,24 @@
-# Teste Tecnico - Microservico CNAE
+# Diagóstico e correções - Microserviço CNAE
 
-Projeto Spring Boot criado para avaliacao de candidatos a vagas de Lider Tecnico e Analista.
+Projeto Spring Boot criado para avaliar de candidatos a vagas de Lider Tecnico e Analista.
 
-## Stack
+# Changelog
 
-- Java 25
-- Spring Boot 4.1.0
-- Spring Web
-- Spring Data JPA
-- H2 Database
-- Lombok
-- Maven
+### Fixed
+- *Problema 1*: Busca de descrição usando termo tem retorno apenas se termo estiver no início da descrição.
+- *Correção*: Alterada query em AtividadeEconomicaCnaeRepository para lower(concat('%', :termo, '%')).
 
-## Como executar
+### Fixed
+- *Problema 2*: Em AtividadeEconomicaCnaeServiceImpl, findByCodigo retorna getFirst caso nao encontre codigo solicitado (orElseGet()).
+- *Correção*: Mudança de orElseGet para orElseThrow e criação de CodigoNotFoundException e GlobalExcetionHandler.
 
-```bash
-mvn spring-boot:run
-```
+### Fixed
+- *Problema 3*: Em CadastroSecundarioServiceImpl, os métodos de busca com findByCodigo retornavam getFirst caso nao encontressem codigo solicitado (orElseGet()).
+- *Correção*: Mudança de orElseGet para orElseThrow e criação de método único para busca de Cnae (buscarCnae(String codigoCnae)).
 
-H2 Console:
+### Added
+- *Testes unitários*: Adicionados 6 testes unitários que são executados com sucesso na build. Os testes são referentes ao layer service.
 
-```text
-http://localhost:8080/h2-console
-JDBC URL: jdbc:h2:mem:cnaedb
-User: sa
-Password:
-```
 
 ## Endpoints
 
@@ -38,15 +31,22 @@ GET /api/cadastros-secundarios/validar-cnae?codigoCnae=6201-5/01
 POST /api/cadastros-secundarios
 ```
 
-Comportamento esperado:
+Comportamentos esperados:
 
-- `GET /api/cnaes` deve retornar todas as atividades cadastradas.
-- `GET /api/cnaes/buscar?termo={texto}` deve buscar CNAEs que contenham o texto informado em qualquer parte da descricao, ignorando maiusculas e minusculas.
-- `GET /api/cnaes/codigo?codigo={codigo}` deve retornar o CNAE do codigo informado.
-- Codigos CNAE inexistentes devem retornar uma resposta HTTP adequada para recurso nao encontrado.
-- `POST /api/cadastros-secundarios` deve criar um cadastro vinculado a um CNAE existente.
-- `GET /api/cadastros-secundarios/validar-cnae?codigoCnae={codigo}` deve validar se o CNAE informado pode ser usado no cadastro.
-- Cadastros secundários com CNAE inexistente nao devem ser criados.
+- 1-) `GET /api/cnaes` deve retornar todas as atividades cadastradas.
+-
+- 2-) `GET /api/cnaes/buscar?termo={texto}` deve buscar CNAEs que contenham o texto informado em qualquer parte da descricao, ignorando maiusculas e minusculas.
+-
+- 3-) `GET /api/cnaes/codigo?codigo={codigo}` deve retornar o CNAE do codigo informado.
+-
+- 4-) Códigos CNAE inexistentes devem retornar uma resposta HTTP adequada para recurso nao encontrado.
+-
+- 5-) `POST /api/cadastros-secundarios` deve criar um cadastro vinculado a um CNAE existente.
+-
+- 6-) `GET /api/cadastros-secundarios/validar-cnae?codigoCnae={codigo}` deve validar se o CNAE informado pode ser usado no cadastro.
+-
+- 7-) Cadastros secundários com CNAE inexistente nao devem ser criados.
+-
 
 Exemplo:
 

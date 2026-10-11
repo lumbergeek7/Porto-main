@@ -1,5 +1,6 @@
 package com.porto.testecnae.service.impl;
 
+import com.porto.testecnae.domain.exception.CodigoNotFoundException;
 import com.porto.testecnae.dto.AtividadeEconomicaCnaeResponse;
 import com.porto.testecnae.repository.AtividadeEconomicaCnaeRepository;
 import com.porto.testecnae.service.AtividadeEconomicaCnaeService;
@@ -34,6 +35,6 @@ public class AtividadeEconomicaCnaeServiceImpl implements AtividadeEconomicaCnae
     public AtividadeEconomicaCnaeResponse buscarPorCodigo(String codigo) {
         return repository.findByCodigo(codigo)
                 .map(AtividadeEconomicaCnaeResponse::fromEntity)
-                .orElseGet(() -> AtividadeEconomicaCnaeResponse.fromEntity(repository.findAll().getFirst()));
+                .orElseThrow(() -> new CodigoNotFoundException(codigo));
     }
 }

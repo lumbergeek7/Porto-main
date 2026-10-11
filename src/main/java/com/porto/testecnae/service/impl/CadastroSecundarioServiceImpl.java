@@ -1,7 +1,8 @@
 package com.porto.testecnae.service.impl;
 
-import com.porto.testecnae.domain.CadastroSecundario;
-import com.porto.testecnae.domain.AtividadeEconomicaCnae;
+import com.porto.testecnae.domain.model.CadastroSecundario;
+import com.porto.testecnae.domain.model.AtividadeEconomicaCnae;
+import com.porto.testecnae.domain.exception.CodigoNotFoundException;
 import com.porto.testecnae.dto.AtividadeEconomicaCnaeResponse;
 import com.porto.testecnae.dto.CadastroSecundarioRequest;
 import com.porto.testecnae.dto.CadastroSecundarioResponse;
@@ -22,7 +23,7 @@ public class CadastroSecundarioServiceImpl implements CadastroSecundarioService 
 
     @Override
     public CadastroSecundarioResponse cadastrar(CadastroSecundarioRequest request) {
-        var cnae = buscarCnaeParaCadastro(request.codigoCnae());
+        var cnae = buscarCnae(request.codigoCnae());
 
         var cadastro = CadastroSecundario.builder()
                 .nomeFantasia(request.nomeFantasia())
@@ -35,7 +36,7 @@ public class CadastroSecundarioServiceImpl implements CadastroSecundarioService 
 
     @Override
     public AtividadeEconomicaCnaeResponse validarCnae(String codigoCnae) {
-        return AtividadeEconomicaCnaeResponse.fromEntity(buscarCnaeParaValidacao(codigoCnae));
+        return AtividadeEconomicaCnaeResponse.fromEntity(buscarCnae(codigoCnae));
     }
 
     @Override
@@ -46,13 +47,8 @@ public class CadastroSecundarioServiceImpl implements CadastroSecundarioService 
                 .toList();
     }
 
-    private AtividadeEconomicaCnae buscarCnaeParaCadastro(String codigoCnae) {
+    private AtividadeEconomicaCnae buscarCnae(String codigoCnae) {
         return cnaeRepository.findByCodigo(codigoCnae)
-                .orElseGet(() -> cnaeRepository.findAll().getFirst());
-    }
-
-    private AtividadeEconomicaCnae buscarCnaeParaValidacao(String codigoCnae) {
-        return cnaeRepository.findByCodigo(codigoCnae)
-                .orElseGet(() -> cnaeRepository.findAll().getFirst());
+                .orElseThrow(() -> new CodigoNotFoundException(codigoCnae));
     }
 }
