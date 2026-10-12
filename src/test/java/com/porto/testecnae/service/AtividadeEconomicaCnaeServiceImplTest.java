@@ -92,9 +92,45 @@ class AtividadeEconomicaCnaeServiceImplTest {
         when(repository.findByCodigo(codigo)).thenReturn(Optional.empty());
 
         // Act & Assert
-        assertThrows(CodigoNotFoundException.class, () -> {
-            cnaeService.buscarPorCodigo(codigo);
-        });
+        assertThrows(CodigoNotFoundException.class, () -> cnaeService.buscarPorCodigo(codigo));
         verify(repository, times(1)).findByCodigo(codigo);
+    }
+
+    @Test
+    @DisplayName("Should return list of all mapped DTOs when listing all activities")
+    void listarTodas_Success() {
+        // Arrange
+        AtividadeEconomicaCnae entity1 = new AtividadeEconomicaCnae();
+        entity1.setCodigo("1111-1/00");
+        entity1.setDescricao("Atividade Um");
+
+        AtividadeEconomicaCnae entity2 = new AtividadeEconomicaCnae();
+        entity2.setCodigo("2222-2/00");
+        entity2.setDescricao("Atividade Dois");
+
+        when(repository.findAll()).thenReturn(List.of(entity1, entity2));
+
+        // Act
+        List<AtividadeEconomicaCnaeResponse> result = cnaeService.listarTodas();
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        verify(repository, times(1)).findAll();
+    }
+
+    @Test
+    @DisplayName("Should return empty list when no activities exist in the repository")
+    void listarTodas_EmptyResult() {
+        // Arrange
+        when(repository.findAll()).thenReturn(Collections.emptyList());
+
+        // Act
+        List<AtividadeEconomicaCnaeResponse> result = cnaeService.listarTodas();
+
+        // Assert
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
+        verify(repository, times(1)).findAll();
     }
 }

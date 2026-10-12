@@ -14,6 +14,7 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(CodigoNotFoundException.class)
+    @SuppressWarnings("unused")
     public ResponseEntity<Map<String, Object>> handleCodigoNotFound(CodigoNotFoundException ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
@@ -22,5 +23,17 @@ public class GlobalExceptionHandler {
         body.put("message", ex.getMessage()); // Will show something like "Codigo 99999 not found"
 
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(Exception.class)
+    @SuppressWarnings("unused")
+    public ResponseEntity<Map<String, Object>> handleGenericException(Exception ex) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        body.put("error", "Internal Server Error");
+        body.put("message", "Ocorreu um erro interno no servidor. Por favor, tente novamente mais tarde.");
+
+        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

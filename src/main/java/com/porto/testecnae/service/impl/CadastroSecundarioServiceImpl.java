@@ -11,17 +11,20 @@ import com.porto.testecnae.repository.CadastroSecundarioRepository;
 import com.porto.testecnae.service.CadastroSecundarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CadastroSecundarioServiceImpl implements CadastroSecundarioService {
 
     private final CadastroSecundarioRepository repository;
     private final AtividadeEconomicaCnaeRepository cnaeRepository;
 
     @Override
+    @Transactional
     public CadastroSecundarioResponse cadastrar(CadastroSecundarioRequest request) {
         var cnae = buscarCnae(request.codigoCnae());
 
