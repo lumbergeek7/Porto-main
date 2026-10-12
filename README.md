@@ -1,4 +1,6 @@
-# 0. Objetivos
+# Relatório Técnico
+
+## 0. Objetivos
 
 1. Validar os endpoints disponiveis.
 2. Corrigir problemas explicando causas e soluções.
@@ -6,7 +8,7 @@
 4. Documentar alterações e resultados (evidências em [/Porto-main/docs](https://github.com/lumbergeek7/Porto-main/tree/fix-porto/docs)).
 5. Outros.
 
-# 1. Endpoints
+## 1. Endpoints
 Endpoints testados com sucesso após correções (via 'curl' e/ou browser).
 Os prints de tela estão em [/Porto-main/docs/1-Endpoints.jpeg](https://github.com/lumbergeek7/Porto-main/tree/fix-porto/docs/1-Endpoints.jpeg).
 ```http
@@ -18,7 +20,7 @@ GET /api/cadastros-secundarios/validar-cnae?codigoCnae=6201-5/01
 POST /api/cadastros-secundarios
 ```
 
-# 2. Correções (6 ajustes)
+## 2. Correções (6 ajustes)
 Foram realizados 6 ajustes e propostos 2 ajustes adicionais
 Os prints de tela estão em [/Porto-main/docs/2-Changelog.jpeg](https://github.com/lumbergeek7/Porto-main/tree/fix-porto/docs/2-Changelog.jpeg).
 
@@ -30,7 +32,7 @@ Os prints de tela estão em [/Porto-main/docs/2-Changelog.jpeg](https://github.c
 ### Ajuste 2:
 - *Problema*: Ao procurar em /cnaes um código inexistente no BD, endpoint retorna primeiro registro ao invés apontar erro.
 - *Causa*: Em AtividadeEconomicaCnaeServiceImpl, findByCodigo retorna getFirst caso nao encontre codigo solicitado (orElseGet()).
-- *Solução*: Mudança de orElseGet para orElseThrow e criação de CodigoNotFoundException e GlobalExcetionHandler.
+- *Solução*: Mudança de orElseGet para orElseThrow e criação de CodigoNotFoundException e GlobalExceptionHandler.
 
 ### Ajuste 3:
 - *Problema*: Ao procurar em /cadastro-secundário um código inexistente no BD, endpoint retorna primeiro registro ao invés apontar erro.
@@ -58,9 +60,9 @@ Os prints de tela estão em [/Porto-main/docs/2-Changelog.jpeg](https://github.c
 
 ### Ajuste 8 (opcional):
 - *Problema*: Arquivo copilot-instructions rastreia uso de copilot.
-- *Solução*: Não ajustado, pois o arquivo e utilizado para a atividade em questão.
+- *Solução*: Não ajustado, pois o arquivo é utilizado apenas para a atividade em questão.
 
-# 3. Testes
+## 3. Testes
 Foram adicionados os testes pertinentes.
 Os prints de tela estão em [/Porto-main/docs/3-Testes.jpeg](https://github.com/lumbergeek7/Porto-main/tree/fix-porto/docs/3-Testes.jpeg).
 
@@ -70,11 +72,14 @@ Os prints de tela estão em [/Porto-main/docs/3-Testes.jpeg](https://github.com/
 ### Teste integrado
 - Adicionado teste integrado para o cadastro secundário (considerado caso mais crítico).
 
-# 4. Evidências de execução e de testes
+## 4. Evidências de execução e de testes
 
 Todos os prints de tela estão organizados em [/Porto-main/docs](https://github.com/lumbergeek7/Porto-main/tree/fix-porto/docs).
+- Evidências de execução e endpoints: [/Porto-main/docs/1-Endpoints.jpeg](https://github.com/lumbergeek7/Porto-main/tree/fix-porto/docs/1-Endpoints.jpeg)
+- Evidências de correções: [/Porto-main/docs/2-Changelog.jpeg](https://github.com/lumbergeek7/Porto-main/tree/fix-porto/docs/2-Changelog.jpeg)
+- Evidências de testes: [/Porto-main/docs/3-Testes.jpeg](https://github.com/lumbergeek7/Porto-main/tree/fix-porto/docs/3-Testes.jpeg)
 
-# 5. Outros
+## 5. Outros
 
 As validações e correções se basearam nos comportamentos esperados e exemplos citados no enunciado da atividade.
 
