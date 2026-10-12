@@ -54,11 +54,11 @@ Os prints de tela estão em [/Porto-main/docs/2-Changelog.jpeg](https://github.c
 - *Causa*: Não há validação para parâmentos fornecidos no POST de cadastro secundário em CadastroSecundarioRequest.
 - *Solução*: Adicionado @Valid em controller e @NotBlank no DTO para não permitir adição sem nome e documento.
 
-### Ajuste 7 (melhoria futuras):
+### Ajuste 7 (melhoria futura):
 - *Problema*: POST utiliza camelCase, mas não aceita snake-case (padrão JSON) para os nomes dos parâmetros.
 - *Solução*: Não ajustado no momento, pois o exemplo 'curl' fornecido pelo enunciado utiliza camelCase.
 
-### Ajuste 8 (melhoria futuras):
+### Ajuste 8 (melhoria futura):
 - *Problema*: Arquivo copilot-instructions rastreia uso de copilot.
 - *Solução*: Não ajustado no momento, pois o arquivo é utilizado apenas para a atividade em questão.
 
