@@ -6,7 +6,7 @@
 2. Corrigir problemas explicando causas e soluções.
 3. Adicionar testes pertinentes.
 4. Documentar alterações e resultados (evidências em [/Porto-main/docs](https://github.com/lumbergeek7/Porto-main/tree/fix-porto/docs)).
-5. Outros.
+5. Resumo.
 
 ## 1. Endpoints
 Endpoints testados com sucesso após correções (via 'curl' e/ou browser).
@@ -21,7 +21,7 @@ POST /api/cadastros-secundarios
 ```
 
 ## 2. Correções (6 ajustes)
-Foram realizados 6 ajustes e propostos 2 ajustes adicionais
+Foram realizados 6 ajustes e propostos 2 ajustes adicionais para o futuro.
 Os prints de tela estão em [/Porto-main/docs/2-Changelog.jpeg](https://github.com/lumbergeek7/Porto-main/tree/fix-porto/docs/2-Changelog.jpeg).
 
 ### Ajuste 1:
@@ -42,11 +42,11 @@ Os prints de tela estão em [/Porto-main/docs/2-Changelog.jpeg](https://github.c
 ### Ajuste 4:
 - *Problema*: Códigos inexistentes retornariam resposta HTTP default não adequada.
 - *Causa*: Não há exceção específica para código inexistente e não há ExceptionHandler.
-- *Solução*: criação de CodigoNotFoundException e GlobalExcetionHandler.
+- *Solução*: criação de CodigoNotFoundException e GlobalExceptionHandler.
 
 ### Ajuste 5:
 - *Problema*: Métodos do layer service não garantem atomicidade.
-- *Causa*: A atomicidadade deve ser garantida também nos serviços com a anotação @Transacional.
+- *Causa*: A atomicidadade deve ser garantida também nos serviços com a anotação @Transactional.
 - *Solução*: Adicionado @Transactional nas classes de 'service'.
 
 ### Ajuste 6:
@@ -54,13 +54,13 @@ Os prints de tela estão em [/Porto-main/docs/2-Changelog.jpeg](https://github.c
 - *Causa*: Não há validação para parâmentos fornecidos no POST de cadastro secundário em CadastroSecundarioRequest.
 - *Solução*: Adicionado @Valid em controller e @NotBlank no DTO para não permitir adição sem nome e documento.
 
-### Ajuste 7 (opcional):
+### Ajuste 7 (melhoria futuras):
 - *Problema*: POST utiliza camelCase, mas não aceita snake-case (padrão JSON) para os nomes dos parâmetros.
-- *Solução*: Não ajustado, pois o exemplo 'curl' fornecido pelo enunciado utiliza camelCase.
+- *Solução*: Não ajustado no momento, pois o exemplo 'curl' fornecido pelo enunciado utiliza camelCase.
 
-### Ajuste 8 (opcional):
+### Ajuste 8 (melhoria futuras):
 - *Problema*: Arquivo copilot-instructions rastreia uso de copilot.
-- *Solução*: Não ajustado, pois o arquivo é utilizado apenas para a atividade em questão.
+- *Solução*: Não ajustado no momento, pois o arquivo é utilizado apenas para a atividade em questão.
 
 ## 3. Testes
 Foram adicionados os testes pertinentes.
@@ -79,9 +79,10 @@ Todos os prints de tela estão organizados em [/Porto-main/docs](https://github.
 - Evidências de correções: [/Porto-main/docs/2-Changelog.jpeg](https://github.com/lumbergeek7/Porto-main/tree/fix-porto/docs/2-Changelog.jpeg)
 - Evidências de testes: [/Porto-main/docs/3-Testes.jpeg](https://github.com/lumbergeek7/Porto-main/tree/fix-porto/docs/3-Testes.jpeg)
 
-## 5. Outros
+## 5. Resumo
 
-As validações e correções se basearam nos comportamentos esperados e exemplos citados no enunciado da atividade.
+Foram validados todos os endpoints, efetuadas seis correções e criados cerca de vinte testes para a aplicação.
+As validações e correções se basearam nos comportamentos esperados e exemplos citados no enunciado da atividade (abaixo).
 
 Comportamentos esperados:
 
