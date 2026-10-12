@@ -2,7 +2,7 @@
 
 ## 0. Objetivos
 
-1. Validar os endpoints disponiveis.
+1. Validar os endpoints disponíveis.
 2. Corrigir problemas explicando causas e soluções.
 3. Adicionar testes pertinentes.
 4. Documentar alterações e resultados (evidências em [/Porto-main/docs](https://github.com/lumbergeek7/Porto-main/tree/fix-porto/docs)).
