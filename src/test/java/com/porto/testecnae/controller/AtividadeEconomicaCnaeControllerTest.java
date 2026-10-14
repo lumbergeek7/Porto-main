@@ -3,6 +3,7 @@ package com.porto.testecnae.controller;
 import com.porto.testecnae.domain.exception.CodigoNotFoundException;
 import com.porto.testecnae.dto.AtividadeEconomicaCnaeResponse;
 import com.porto.testecnae.service.AtividadeEconomicaCnaeService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -91,15 +92,17 @@ class AtividadeEconomicaCnaeControllerTest {
     @Test
     @DisplayName("GET /api/cnaes/codigo -> Should return 404 Not Found when code does not exist")
     void buscarPorCodigo_ShouldReturnNotFound_WhenCodeDoesNotExist() throws Exception {
+        // Arrange
         String invalidCodigo = "99999";
         when(service.buscarPorCodigo(invalidCodigo)).thenThrow(new CodigoNotFoundException(invalidCodigo));
 
-        try {
-            mockMvc.perform(get("/api/cnaes/codigo")
-                    .param("codigo", invalidCodigo)
-                    .contentType(MediaType.APPLICATION_JSON));
-        } catch (Exception e) {
-            org.junit.jupiter.api.Assertions.assertTrue(e.getCause() instanceof CodigoNotFoundException);
-        }
+        // Act & Assert
+        mockMvc.perform(get("/api/cnaes/codigo")
+                        .param("codigo", invalidCodigo)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(result -> Assertions.assertInstanceOf(
+                        CodigoNotFoundException.class,
+                        result.getResolvedException()
+                ));
     }
 }

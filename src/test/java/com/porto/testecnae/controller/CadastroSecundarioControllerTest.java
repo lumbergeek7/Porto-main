@@ -5,6 +5,7 @@ import com.porto.testecnae.dto.AtividadeEconomicaCnaeResponse;
 import com.porto.testecnae.dto.CadastroSecundarioRequest;
 import com.porto.testecnae.dto.CadastroSecundarioResponse;
 import com.porto.testecnae.service.CadastroSecundarioService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -67,23 +68,23 @@ class CadastroSecundarioControllerTest {
     @Test
     @DisplayName("POST /api/cadastros-secundarios -> Should intercept exception when CNAE does not exist")
     void cadastrar_ShouldThrowNotFound_WhenCnaeDoesNotExist() throws Exception {
-        when(service.cadastrar(any(CadastroSecundarioRequest.class))).thenThrow(new CodigoNotFoundException("99999"));
+        // Arrange
+        when(service.cadastrar(any(CadastroSecundarioRequest.class)))
+                .thenThrow(new CodigoNotFoundException("99999"));
 
         String jsonPayload = """
-                {
-                    "nomeFantasia": "Empresa Teste",
-                    "documento": "12345678901",
-                    "codigoCnae": "99999"
-                }
-                """;
+            {
+                "nomeFantasia": "Empresa Teste",
+                "documento": "12345678901",
+                "codigoCnae": "99999"
+            }
+            """;
 
-        try {
-            mockMvc.perform(post("/api/cadastros-secundarios")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(jsonPayload));
-        } catch (Exception e) {
-            org.junit.jupiter.api.Assertions.assertTrue(e.getCause() instanceof CodigoNotFoundException);
-        }
+        // Act & Assert
+        mockMvc.perform(post("/api/cadastros-secundarios")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonPayload))
+                .andExpect(result -> Assertions.assertInstanceOf(CodigoNotFoundException.class, result.getResolvedException()));
     }
 
     @Test
