@@ -1,6 +1,6 @@
 package com.porto.testecnae.repository;
 
-import com.porto.testecnae.domain.AtividadeEconomicaCnae;
+import com.porto.testecnae.domain.model.AtividadeEconomicaCnae;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,7 +15,7 @@ public interface AtividadeEconomicaCnaeRepository extends JpaRepository<Atividad
     @Query("""
             select c
             from AtividadeEconomicaCnae c
-            where lower(c.descricao) like lower(concat(:termo, '%'))
+            where lower(c.descricao) like lower(concat('%', :termo, '%'))
             order by c.codigo
             """)
     List<AtividadeEconomicaCnae> buscarPorDescricao(@Param("termo") String termo);

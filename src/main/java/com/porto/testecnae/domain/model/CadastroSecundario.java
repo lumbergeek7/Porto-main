@@ -1,4 +1,4 @@
-package com.porto.testecnae.domain;
+package com.porto.testecnae.domain.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

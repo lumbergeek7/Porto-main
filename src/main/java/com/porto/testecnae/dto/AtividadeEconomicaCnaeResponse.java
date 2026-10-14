@@ -1,6 +1,6 @@
 package com.porto.testecnae.dto;
 
-import com.porto.testecnae.domain.AtividadeEconomicaCnae;
+import com.porto.testecnae.domain.model.AtividadeEconomicaCnae;
 
 public record AtividadeEconomicaCnaeResponse(
         Long id,

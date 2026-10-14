@@ -1,6 +1,6 @@
 package com.porto.testecnae.dto;
 
-import com.porto.testecnae.domain.CadastroSecundario;
+import com.porto.testecnae.domain.model.CadastroSecundario;
 
 public record CadastroSecundarioResponse(
         Long id,
